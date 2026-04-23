@@ -4,3 +4,4 @@ scikit-learn
 pypdf2
 python-docx
 numpy
+gunicorn
