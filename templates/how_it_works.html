@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>How It Works - ResumeAnalyzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    color:white;
+    overflow-x:hidden;
+    background:
+    linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+    url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle at 40% 40%, rgba(139,124,255,.2), transparent 60%);
+    animation:moveGlow 10s infinite alternate ease-in-out;
+    z-index:-1;
+}
+
+@keyframes moveGlow{
+    from{transform:translate(-10%,-10%)}
+    to{transform:translate(10%,10%)}
+}
+
+.navbar{
+    display:flex;
+    align-items:center;
+    padding:30px 60px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo img{
+    width:45px;
+}
+
+.logo h2{
+    font-size:28px;
+    font-weight:800;
+}
+
+.header{
+    text-align:center;
+    margin-top:30px;
+}
+
+.header h1{
+    font-size:48px;
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+.header p{
+    font-size:18px;
+    color:#d4ccff;
+}
+
+.timeline{
+    position:relative;
+    max-width:1200px;
+    margin:80px auto;
+    padding:20px 0;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    width:4px;
+    height:100%;
+    background:linear-gradient(#8b7cff, transparent);
+    transform:translateX(-50%);
+}
+
+.step{
+    position:relative;
+    width:45%;
+    padding:30px;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    margin-bottom:80px;
+    transition:.4s;
+}
+
+.step img{
+    width:220px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+.step:hover{
+    box-shadow:0 0 40px rgba(139,124,255,.6);
+    transform:translateY(-10px);
+}
+
+.left{
+    left:0;
+}
+
+.right{
+    left:55%;
+}
+
+.step-number{
+    position:absolute;
+    top:-25px;
+    left:50%;
+    transform:translateX(-50%);
+    width:50px;
+    height:50px;
+    background:linear-gradient(135deg,#6a5af9,#8b7cff);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:20px;
+    box-shadow:0 0 20px rgba(139,124,255,.6);
+}
+
+@media(max-width:900px){
+    .step{
+        width:90%;
+        left:5% !important;
+    }
+
+    .timeline::before{
+        left:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">
+        <img src="{% static 'images/brain-logo.png' %}">
+        <h2>ResumeAnalyzer</h2>
+    </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <h1>How ResumeAnalyzer Works</h1>
+    <p>Follow these simple steps to analyze and optimize your resume.</p>
+</div>
+
+<!-- Timeline -->
+<div class="timeline">
+
+    <!-- STEP 1 -->
+    <div class="step left">
+        <div class="step-number">1</div>
+        <h3>Select Career Level</h3>
+        <p>Choose your current career level for personalized resume evaluation.</p>
+<img src="{% static 'images/step1.png' %}?v=2">
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step right">
+        <div class="step-number">2</div>
+        <h3>Build or Upload Your Resume</h3>
+        <p>Create a new resume or upload your existing resume for AI analysis.</p>
+<img src="{% static 'images/step2.png' %}?v=2">    </div>
+
+    <!-- STEP 3 -->
+    <div class="step left">
+        <div class="step-number">3</div>
+        <h3>Upload Job Description</h3>
+        <p>Upload the target job description to calculate job match score.</p>
+<img src="{% static 'images/step3.png' %}?v=2">
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step right">
+        <div class="step-number">4</div>
+        <h3>Generate Results & AI Suggestions</h3>
+        <p>Get ATS score, job match score and smart AI-based resume improvement suggestions.</p>
+<img src="{% static 'images/step4.png' %}?v=2">
+    </div>
+
+</div>
+
+<script>
+// PARTICLES (unchanged)
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+ctx.fillStyle="#8b7cff";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

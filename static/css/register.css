@@ -1,0 +1,8 @@
+/* Same as login.css, but change button */
+.signup-btn {
+    background: linear-gradient(90deg, #a78bfa, #7b68ee);
+}
+.signup-btn:hover {
+    box-shadow: 0 10px 20px rgba(167, 139, 250, 0.4);
+}
+.register-card h2 { font-size: 32px; }

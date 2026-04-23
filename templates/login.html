@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login - ResumeAnalyzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    color:white;
+    background:
+    linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+    url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+}
+
+/* PARTICLES */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-2;
+}
+
+/* Moving Glow */
+body::after{
+    content:"";
+    position:fixed;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle at 30% 30%, rgba(139,124,255,.25), transparent 50%);
+    animation:moveGlow 12s infinite alternate ease-in-out;
+    z-index:-1;
+}
+
+@keyframes moveGlow{
+    from{transform:translate(-10%,-10%)}
+    to{transform:translate(10%,10%)}
+}
+
+/* TOP LEFT BRAND */
+.brand-top{
+    position:absolute;
+    top:30px;
+    left:40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.brand-top img{
+    width:45px;
+}
+
+.brand-top h1{
+    font-size:26px;
+    font-weight:800;
+}
+
+/* CENTER CONTAINER */
+.auth-wrapper{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* CARD */
+.card{
+    width:420px;
+    padding:45px;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(25px);
+    border-radius:20px;
+    box-shadow:0 0 60px rgba(139,124,255,.4);
+    text-align:center;
+}
+
+.card h2{
+    margin-bottom:25px;
+    font-size:28px;
+}
+
+/* INPUTS */
+input{
+    width:100%;
+    padding:14px;
+    margin:12px 0;
+    border-radius:10px;
+    border:none;
+    outline:none;
+    background:rgba(255,255,255,.1);
+    color:white;
+    font-size:14px;
+}
+
+input:focus{
+    box-shadow:0 0 15px #8b7cff;
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#6a5af9,#8b7cff);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    box-shadow:0 20px 40px rgba(139,124,255,.5);
+    transform:translateY(-3px);
+}
+
+.card p{
+    margin-top:20px;
+}
+
+.card a{
+    color:#8b7cff;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- TOP LEFT LOGO -->
+<div class="brand-top">
+    <img src="{% static 'images/brain-logo.png' %}">
+    <h1>ResumeAnalyzer</h1>
+</div>
+
+<!-- CENTER LOGIN -->
+<div class="auth-wrapper">
+    <div class="card">
+        <h2>Login</h2>
+
+        <form method="POST">
+    {% csrf_token %}
+
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+
+    <button type="submit">Login</button>
+</form>
+
+        <p>
+            Don't have an account?
+            <a href="{% url 'analyzer:register' %}">Sign Up</a>
+        </p>
+    </div>
+</div>
+
+<script>
+// PARTICLES
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+ctx.fillStyle="#8b7cff";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

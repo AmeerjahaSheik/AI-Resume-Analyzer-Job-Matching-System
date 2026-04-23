@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">AI Resume Analyzer</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/how-it-works/">How It Works</a>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-card">
+        <h1>
+            <span class="gradient-text">AI-Driven</span> Resume Analyzer<br>
+            & Job Matching System
+        </h1>
+
+        <p class="hero-desc">
+            An intelligent recruitment support system that analyzes resumes using
+            Artificial Intelligence and Natural Language Processing to match candidates
+            with suitable job roles and identify skill gaps.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="/login/" class="btn primary">Login</a>
+            <a href="/register/" class="btn outline">Sign Up</a>
+        </div>
+    </div>
+</section>
+<!-- WORKFLOW SECTION -->
+<section class="workflow">
+    <h2>How It Works</h2>
+
+    <div class="workflow-cards">
+        <div class="card">
+            <img src="{% static 'images/workflow/upload.svg' %}" alt="Upload Resume">
+            <h3>Upload Resume</h3>
+            <p>Upload your resume in PDF format.</p>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/workflow/ai.svg' %}" alt="AI Parsing">
+            <h3>AI Analysis</h3>
+            <p>AI analyzes skills, experience and keywords.</p>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/workflow/match.svg' %}" alt="ATS Score">
+            <h3>Job Matching</h3>
+            <p>Matches resume with relevant job roles.</p>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/workflow/database.svg' %}" alt="Job Matching">
+            <h3>Get Report</h3>
+            <p>Download ATS score and skill gap report.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

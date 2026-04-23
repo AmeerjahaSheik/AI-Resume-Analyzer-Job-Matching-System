@@ -1,0 +1,253 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background: url("../images/Dashboard-bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Subtle dark overlay */
+.background{
+    position:fixed;
+    inset:0;
+    background:rgba(10,5,30,0.75);
+    backdrop-filter: blur(3px);
+    z-index:-2;
+}
+
+/* Floating particles */
+.particles{
+    position:fixed;
+    inset:0;
+    background-image: radial-gradient(white 1px, transparent 1px);
+    background-size: 100px 100px;
+    opacity:0.08;
+    animation: float 60s linear infinite;
+    z-index:-1;
+}
+
+@keyframes float{
+    from{background-position:0 0;}
+    to{background-position:1000px 1000px;}
+}
+
+/* Sidebar */
+.sidebar{
+    width:240px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    background:rgba(20,15,40,0.85);
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+}
+
+.logo img{
+    width:32px;
+}
+
+nav a{
+    display:block;
+    padding:10px;
+    margin:6px 0;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+nav a:hover, nav a.active{
+    background:rgba(255,255,255,0.08);
+}
+
+.bottom-links a{
+    display:block;
+    margin-top:8px;
+    font-size:14px;
+}
+
+/* Main */
+.main{
+    margin-left:260px;
+    padding:40px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:flex-end;
+}
+
+.profile-circle{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#00ffcc,#00aa88);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.title{
+    text-align:center;
+    margin-top:10px;
+}
+
+.subtitle{
+    text-align:center;
+    opacity:0.7;
+    margin-bottom:25px;
+}
+
+.level-box{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-bottom:40px;
+}
+
+.level-btn{
+    padding:10px 20px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.3);
+    background:transparent;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.level-btn.active,
+.level-btn:hover{
+    background:linear-gradient(135deg,#00ffcc,#008866);
+    color:black;
+    transform:scale(1.05);
+}
+
+/* Score Container */
+.score-container{
+    display:flex;
+    gap:40px;
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter: blur(10px);
+}
+
+.score-side{
+    flex:1;
+    text-align:center;
+}
+
+.upload-btn{
+    background:linear-gradient(135deg,#00ffcc,#00aa88);
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    margin-bottom:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.upload-btn:hover{
+    transform:scale(1.05);
+}
+
+.circle{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    margin:0 auto 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.multi-color{
+    background:conic-gradient(
+        red 0% 33%,
+        yellow 33% 66%,
+        #00ff66 66% 100%
+    );
+}
+
+.inner{
+    width:120px;
+    height:120px;
+    background:#1a1033;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    font-size:20px;
+}
+
+.inner span{
+    font-size:12px;
+    opacity:0.7;
+}
+
+/* Bars */
+.progress-group{
+    text-align:left;
+    font-size:14px;
+}
+
+.bar{
+    background:rgba(255,255,255,0.1);
+    height:6px;
+    border-radius:4px;
+    margin-bottom:10px;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,red,yellow,#00ff66);
+    border-radius:4px;
+}
+
+.divider{
+    width:1px;
+    background:rgba(255,255,255,0.2);
+}
+
+/* Glass Sections */
+.glass-box{
+    margin-top:30px;
+    padding:25px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+}
+
+.builder-btn,
+.ai-btn{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:linear-gradient(135deg,#00ffcc,#00aa88);
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.builder-btn:hover,
+.ai-btn:hover{
+    transform:scale(1.05);
+}

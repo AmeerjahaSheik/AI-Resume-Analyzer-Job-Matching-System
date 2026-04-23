@@ -1,0 +1,386 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Results</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+color:white;
+background:url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+overflow-x:hidden;
+position:relative;
+}
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(10,0,30,0.85);
+z-index:-2;
+}
+
+.spark{
+position:fixed;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:0.3;
+animation:float 18s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+align-items:center;
+padding:20px 40px;
+}
+
+.logo{
+width:80px;
+margin-right:12px;
+filter:drop-shadow(0 0 20px #00eaff);
+}
+
+.brand{
+font-size:22px;
+font-weight:bold;
+}
+
+/* TITLE */
+
+.big-title{
+text-align:center;
+margin-top:10px;
+}
+
+.big-title h1{
+font-size:55px;
+font-weight:900;
+letter-spacing:4px;
+background:linear-gradient(90deg,#00eaff,#ff00cc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:8px;
+}
+
+.big-title p{
+color:#ccc;
+font-size:15px;
+}
+
+/* SECTION */
+
+.section{
+margin:40px auto;
+width:85%;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-radius:20px;
+padding:45px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+/* CIRCLE */
+
+.circle{
+width:230px;
+height:230px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+font-weight:bold;
+position:relative;
+}
+
+.circle span{
+position:absolute;
+z-index:2;
+}
+
+.circle::after{
+content:"";
+position:absolute;
+width:170px;
+height:170px;
+background:#14002e;
+border-radius:50%;
+}
+
+/* BARS */
+
+.bars{
+width:60%;
+}
+
+.bar{
+margin-bottom:25px;
+}
+
+.bar-title{
+display:flex;
+justify-content:space-between;
+margin-bottom:6px;
+}
+
+.progress{
+height:9px;
+border-radius:5px;
+background:rgba(255,255,255,0.1);
+overflow:hidden;
+}
+
+.progress span{
+display:block;
+height:100%;
+}
+
+/* AI SECTION */
+
+.ai-section{
+width:85%;
+margin:50px auto;
+background:rgba(255,255,255,0.05);
+padding:45px;
+border-radius:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<script>
+for(let i=0;i<60;i++){
+let spark=document.createElement("div");
+spark.className="spark";
+spark.style.left=Math.random()*100+"%";
+spark.style.animationDuration=(15+Math.random()*10)+"s";
+document.body.appendChild(spark);
+}
+</script>
+
+<div class="header">
+<img src="{% static 'images/brain-logo.png' %}" class="logo">
+<div class="brand">ResumeAnalyzer</div>
+</div>
+
+<div class="big-title">
+<h1>RESULTS</h1>
+<p>Your resume performance breakdown and intelligent insights.</p>
+</div>
+
+<!-- ATS SECTION -->
+
+<div class="section">
+
+<div class="circle" id="atsCircle">
+<span>{{ ats_score|default:0 }}%</span>
+</div>
+
+<div class="bars">
+
+<h2>ATS Score</h2>
+
+<!-- Skill Match -->
+
+<div class="bar">
+<div class="bar-title">
+Skill Match <span>{{ skill_score }}%</span>
+</div>
+
+<div class="progress">
+<span style="width:{{ skill_score }}%; background:
+{% if skill_score >= 75 %}#0f9d58
+{% elif skill_score >= 50 %}#d4a017
+{% else %}#b22222
+{% endif %}
+"></span>
+</div>
+</div>
+
+<!-- Keyword Match -->
+
+<div class="bar">
+<div class="bar-title">
+Keyword Match <span>{{ keyword_score }}%</span>
+</div>
+
+<div class="progress">
+<span style="width:{{ keyword_score }}%; background:
+{% if keyword_score >= 75 %}#0f9d58
+{% elif keyword_score >= 50 %}#d4a017
+{% else %}#b22222
+{% endif %}
+"></span>
+</div>
+</div>
+
+<!-- Impact Match -->
+
+<div class="bar">
+<div class="bar-title">
+Impact Match <span>{{ impact_score }}%</span>
+</div>
+
+<div class="progress">
+<span style="width:{{ impact_score }}%; background:
+{% if impact_score >= 75 %}#0f9d58
+{% elif impact_score >= 50 %}#d4a017
+{% else %}#b22222
+{% endif %}
+"></span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<!-- JOB MATCH SECTION -->
+
+{% if job_score %}
+
+<div class="section">
+
+<div class="circle" id="jobCircle">
+<span>{{ job_score }}%</span>
+</div>
+
+<div class="bars">
+
+<h2>Job Match Score</h2>
+
+<div class="bar">
+<div class="bar-title">
+Skill Alignment <span>{{ skill_alignment }}%</span>
+</div>
+
+<div class="progress">
+<span style="width:{{ skill_alignment }}%; background:
+{% if skill_alignment >= 75 %}#0f9d58
+{% elif skill_alignment >= 50 %}#d4a017
+{% else %}#b22222
+{% endif %}
+"></span>
+</div>
+</div>
+
+<div class="bar">
+<div class="bar-title">
+Experience Alignment <span>{{ experience_alignment }}%</span>
+</div>
+
+<div class="progress">
+<span style="width:{{ experience_alignment }}%; background:
+{% if experience_alignment >= 75 %}#0f9d58
+{% elif experience_alignment >= 50 %}#d4a017
+{% else %}#b22222
+{% endif %}
+"></span>
+</div>
+</div>
+
+<div class="bar">
+<div class="bar-title">
+Responsibility Alignment <span>{{ responsibility_alignment }}%</span>
+</div>
+
+<div class="progress">
+<span style="width:{{ responsibility_alignment }}%; background:
+{% if responsibility_alignment >= 75 %}#0f9d58
+{% elif responsibility_alignment >= 50 %}#d4a017
+{% else %}#b22222
+{% endif %}
+"></span>
+</div>
+</div>
+
+</div>
+</div>
+
+{% endif %}
+
+<!-- AI SUGGESTIONS -->
+
+<div class="ai-section">
+
+<h2>AI Resume Suggestions</h2>
+
+<ul>
+
+{% if ai_feedback %}
+
+{% for suggestion in ai_feedback %}
+<li>✔ {{ suggestion }}</li>
+{% endfor %}
+
+{% else %}
+
+<li>No suggestions needed. Your resume looks strong.</li>
+
+{% endif %}
+
+</ul>
+
+</div>
+
+<script>
+
+function getColor(score){
+
+if(score >= 75){
+return "#0f9d58";
+}
+else if(score >= 50){
+return "#d4a017";
+}
+else{
+return "#b22222";
+}
+
+}
+
+function animateCircle(id,value){
+
+let circle=document.getElementById(id);
+
+if(!circle) return;
+
+let color=getColor(value);
+
+circle.style.background =
+`conic-gradient(${color} ${value*3.6}deg, #2a1b3f 0deg)`;
+
+}
+
+animateCircle("atsCircle", {{ ats_score|default:0 }});
+
+{% if job_score %}
+animateCircle("jobCircle", {{ job_score|default:0 }});
+{% endif %}
+
+</script>
+
+</body>
+</html>
+

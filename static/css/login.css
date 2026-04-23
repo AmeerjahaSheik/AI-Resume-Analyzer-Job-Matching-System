@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px) brightness(0.6);
+    z-index: -2;
+}
+
+/* Dark Overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 30, 0.6);
+    z-index: -1;
+}
+
+/* Floating Circles */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+}
+
+.circle1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    left: -100px;
+    background: rgba(120, 80, 255, 0.4);
+}
+
+.circle2 {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    right: -80px;
+    background: rgba(80, 180, 255, 0.4);
+}
+
+.circle3 {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    right: 10%;
+    background: rgba(150, 100, 255, 0.3);
+}
+
+/* Login Card */
+.login-card {
+    background: rgba(20, 25, 50, 0.75);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 50px 40px;
+    width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.login-card h2 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.login-card p {
+    opacity: 0.8;
+    margin-bottom: 40px;
+    font-size: 16px;
+}
+
+.input-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Button */
+.signin-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(90deg, #a78bfa, #7b68ee);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: 0.3s;
+}
+
+.signin-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(167, 139, 250, 0.4);
+}
+
+/* Register Link */
+.register-link {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.register-link a {
+    color: #a78bfa;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-card {
+        width: 90%;
+        padding: 40px 30px;
+    }
+}

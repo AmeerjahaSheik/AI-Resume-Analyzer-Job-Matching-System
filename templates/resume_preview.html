@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Resume Preview</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:
+linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+color:white;
+}
+
+/* CENTER RESUME */
+
+.preview-wrapper{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding-top:80px;
+padding-bottom:120px;
+}
+
+/* RESUME PAGE */
+
+.resume-container{
+
+width:794px;
+min-height:1123px;
+
+background:white;
+color:black;
+
+padding:60px;
+
+border-radius:12px;
+
+box-shadow:0 30px 70px rgba(0,0,0,.6);
+
+}
+
+/* DOWNLOAD BUTTON */
+
+.download-btn{
+
+position:fixed;
+bottom:40px;
+right:50px;
+
+padding:12px 30px;
+
+border:none;
+border-radius:30px;
+
+background:linear-gradient(135deg,#6a5af9,#8b7cff);
+
+color:white;
+font-weight:600;
+
+cursor:pointer;
+
+box-shadow:0 15px 35px rgba(139,124,255,.5);
+
+transition:.3s;
+
+}
+
+.download-btn:hover{
+
+transform:translateY(-3px);
+box-shadow:0 25px 45px rgba(139,124,255,.7);
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<div class="preview-wrapper">
+
+<div class="resume-container">
+
+{% include template_file %}
+
+</div>
+
+</div>
+
+
+<button class="download-btn" onclick="downloadPDF()">
+Download PDF
+</button>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+
+function downloadPDF(){
+
+const element=document.querySelector(".resume-container");
+
+const opt={
+margin:0,
+filename:'resume.pdf',
+image:{type:'jpeg',quality:1},
+html2canvas:{scale:2},
+jsPDF:{unit:'px',format:[794,1123],orientation:'portrait'}
+};
+
+html2pdf().set(opt).from(element).save();
+
+}
+
+</script>
+
+</body>
+</html>

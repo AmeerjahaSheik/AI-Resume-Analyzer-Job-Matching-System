@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Resume Builder - ResumeAnalyzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    color:white;
+    background:
+    linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+    url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+}
+
+/* PARTICLES */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-2;
+}
+
+/* Moving Glow */
+body::after{
+    content:"";
+    position:fixed;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle at 30% 30%, rgba(139,124,255,.25), transparent 50%);
+    animation:moveGlow 12s infinite alternate ease-in-out;
+    z-index:-1;
+}
+
+@keyframes moveGlow{
+    from{transform:translate(-10%,-10%)}
+    to{transform:translate(10%,10%)}
+}
+
+/* HEADER */
+.brand-top{
+    position:absolute;
+    top:30px;
+    left:40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.brand-top img{
+    width:45px;
+}
+
+.brand-top h1{
+    font-size:26px;
+    font-weight:800;
+}
+
+/* MAIN CONTAINER */
+.container{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:80px;
+    padding:0 80px;
+}
+
+/* LEFT SIDE */
+.left{
+    max-width:480px;
+}
+
+.left h2{
+    font-size:40px;
+    font-weight:800;
+    margin-bottom:25px;
+    line-height:1.3;
+}
+
+.highlight{
+    color:#8b7cff;
+}
+
+.step{
+    display:flex;
+    align-items:center;
+    margin-bottom:15px;
+    font-size:16px;
+}
+
+.circle{
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:#8b7cff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:12px;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* BUTTON */
+.start-btn{
+    margin-top:25px;
+    padding:12px 28px;
+    border:none;
+    border-radius:8px;
+    background:linear-gradient(135deg,#6a5af9,#8b7cff);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.start-btn:hover{
+    box-shadow:0 20px 40px rgba(139,124,255,.5);
+    transform:translateY(-3px);
+}
+
+/* RIGHT SIDE */
+.resume-img{
+    width:260px;
+    border-radius:12px;
+    box-shadow:0 20px 40px rgba(0,0,0,.5);
+    transition:.3s;
+}
+
+.resume-img:hover{
+    transform:scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="brand-top">
+    <img src="{% static 'images/brain-logo.png' %}">
+    <h1>ResumeAnalyzer</h1>
+</div>
+
+<div class="container">
+
+    <div class="left">
+        <h2>
+            Build Your Resume <br>
+            <span class="highlight">From Scratch</span> <br>
+            In Just 3 Easy Steps
+        </h2>
+
+        <div class="step">
+            <div class="circle">1</div>
+            Choose a professional template
+        </div>
+
+        <div class="step">
+            <div class="circle">2</div>
+            Enter your personal & career details
+        </div>
+
+        <div class="step">
+            <div class="circle">3</div>
+            Download polished PDF instantly
+        </div>
+
+       <a href="{% url 'analyzer:templates' %}" class="start-btn">
+        Start Building
+        </a>
+
+
+
+
+
+
+    </div>
+
+    <div>
+        <img src="{% static 'images/sample_resume.png' %}" class="resume-img">
+    </div>
+
+</div>
+
+<script>
+// PARTICLES
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+ctx.fillStyle="#8b7cff";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

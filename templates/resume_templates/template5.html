@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+body{
+background:
+linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+url("{% static 'images/bg-main.jpg' %}");
+font-family:Georgia;
+}
+
+.resume{
+width:794px;
+min-height:1123px;
+margin:100px auto;
+background:white;
+padding:40px;
+}
+
+.name{
+font-size:34px;
+color:#4a2ea8;
+font-weight:bold;
+}
+
+.section{
+margin-top:25px;
+}
+
+.section-title{
+color:#4a2ea8;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.download{
+position:fixed;
+bottom:40px;
+right:40px;
+}
+
+button{
+padding:12px 25px;
+background:#6a5af9;
+border:none;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="resume">
+
+<div class="name">{{ first_name }} {{ last_name }}</div>
+
+<div>{{ job_title }}</div>
+
+<hr>
+
+<div class="section">
+
+<div class="section-title">Profile</div>
+
+<p>{{ summary }}</p>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">Experience</div>
+
+<b>{{ job_title }}</b> – {{ company }}
+
+<ul>
+<li>{{ exp1 }}</li>
+<li>{{ exp2 }}</li>
+<li>{{ exp3 }}</li>
+</ul>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">Education</div>
+
+<p>{{ degree1 }} – {{ college1 }}</p>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">Skills</div>
+
+<p>{{ skills }}</p>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">Courses</div>
+
+<p>{{ certifications }}</p>
+
+</div>
+
+</div>
+
+<div class="download">
+<button onclick="window.print()">Download PDF</button>
+</div>
+
+</body>
+</html>

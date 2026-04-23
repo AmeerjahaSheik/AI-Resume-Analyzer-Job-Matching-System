@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+body{
+background:
+linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+url("{% static 'images/bg-main.jpg' %}");
+font-family:Arial;
+}
+
+.resume{
+width:794px;
+min-height:1123px;
+margin:100px auto;
+background:white;
+padding:40px;
+}
+
+.section{
+margin-top:25px;
+}
+
+.download{
+position:fixed;
+bottom:40px;
+right:40px;
+}
+
+button{
+padding:12px 25px;
+background:#6a5af9;
+border:none;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="resume">
+
+<h1>{{ first_name }} {{ last_name }}</h1>
+
+<p>
+{{ email }} | {{ phone }} | {{ location }}
+</p>
+
+<hr>
+
+<h3>Education</h3>
+
+<p>{{ degree1 }} – {{ college1 }}</p>
+
+<h3>Experience</h3>
+
+<b>{{ job_title }}</b> – {{ company }}
+
+<ul>
+<li>{{ exp1 }}</li>
+<li>{{ exp2 }}</li>
+<li>{{ exp3 }}</li>
+</ul>
+
+<h3>Skills</h3>
+
+<p>{{ skills }}</p>
+
+<h3>Projects</h3>
+
+<b>{{ project_title }}</b>
+
+<p>{{ project_description }}</p>
+
+</div>
+
+<div class="download">
+<button onclick="window.print()">Download PDF</button>
+</div>
+
+</body>
+</html>

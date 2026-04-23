@@ -1,0 +1,356 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ResumeAnalyzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+    color:white;
+    background:
+    linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.95)),
+    url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+}
+
+/* Animated Glow */
+body::after{
+    content:"";
+    position:fixed;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle at 30% 30%, rgba(139,124,255,.25), transparent 50%);
+    animation:moveGlow 10s infinite alternate ease-in-out;
+    z-index:-1;
+}
+
+@keyframes moveGlow{
+    from{transform:translate(-10%,-10%)}
+    to{transform:translate(10%,10%)}
+}
+
+/* Canvas */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-2;
+}
+
+/* Layout */
+.container{
+    max-width:1300px;
+    margin:auto;
+    padding:0 40px;
+}
+
+/* Navbar */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:30px 0;
+}
+
+.logo-section{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-img{ width:50px; }
+
+.brand-text{
+    font-size:24px;
+    font-weight:700;
+}
+
+.nav-links{
+    display:flex;
+    gap:40px;
+    list-style:none;
+    align-items:center;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#ddd;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#8b7cff;
+}
+
+/* Buttons */
+.primary-btn{
+    padding:14px 30px;
+    border-radius:12px;
+    border:none;
+    background:linear-gradient(135deg,#6a5af9,#8b7cff);
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+    display:inline-block;
+}
+
+.primary-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 40px rgba(139,124,255,.4);
+}
+
+.primary-btn:active{
+    transform:scale(0.95);
+}
+
+.secondary-btn{
+    padding:14px 30px;
+    border-radius:12px;
+    border:1px solid #8b7cff;
+    color:#8b7cff;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.secondary-btn:hover{
+    background:#8b7cff;
+    color:white;
+}
+
+/* Hero */
+.hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:120px 0;
+    gap:60px;
+}
+
+.hero-title{
+    font-size:46px;
+    font-weight:800;
+    animation:fadeUp 1s ease forwards;
+}
+
+.hero-subtitle{
+    margin:25px 0;
+    font-size:18px;
+    color:#d4ccff;
+    animation:fadeUp 1.5s ease forwards;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:20px;
+    animation:fadeUp 2s ease forwards;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(40px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* Hero Image */
+.hero-right{
+    perspective:1200px;
+}
+
+.dashboard-preview{
+    width:520px;
+    border-radius:20px;
+    transition:transform .3s ease;
+}
+
+/* Features */
+.features{
+    display:flex;
+    justify-content:center;
+    gap:60px;
+    padding:80px 0;
+}
+
+.feature-card{
+    width:280px;
+    background:rgba(255,255,255,.05);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    backdrop-filter:blur(20px);
+    transition:.6s;
+    opacity:0;
+    transform:translateY(50px);
+}
+
+.feature-card.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.feature-card img{
+    width:90px;
+    margin-bottom:20px;
+}
+
+.feature-card:hover{
+    transform:translateY(-15px) scale(1.05);
+    box-shadow:0 0 60px rgba(139,124,255,.6);
+}
+
+/* CTA */
+.cta{
+    text-align:center;
+    padding:80px 0 120px 0;  /* FIXED spacing */
+}
+
+.cta h2{
+    font-size:34px;
+    margin-bottom:30px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+
+<nav class="navbar">
+    <div class="logo-section">
+        <img src="{% static 'images/brain-logo.png' %}" class="logo-img">
+        <span class="brand-text">ResumeAnalyzer</span>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a href="{% url 'analyzer:how_it_works' %}" class="secondary-btn">See How It Works</a>
+        </li>
+        <li>
+            <a href="{% url 'analyzer:login' %}">Login</a>
+        </li>
+    </ul>
+
+    <a href="{% url 'analyzer:register' %}" class="primary-btn">Get Started</a>
+</nav>
+
+<section class="hero">
+    <div>
+        <h1 class="hero-title">
+            AI-Powered Resume Analyzer & Smart Job Matching
+        </h1>
+
+        <p class="hero-subtitle">
+            Turn your resume into an interview-winning asset with AI-powered ATS scoring,
+            intelligent skill gap detection, and precision job matching.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'analyzer:dashboard' %}" class="primary-btn">Analyze My Resume</a>
+            <a href="{% url 'analyzer:how_it_works' %}" class="secondary-btn">See How It Works</a>
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <img src="{% static 'images/dashboard-preview.png' %}" 
+             class="dashboard-preview"
+             id="preview">
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <img src="{% static 'images/score.png' %}">
+        <h3>ATS Scoring</h3>
+    </div>
+
+    <div class="feature-card">
+        <img src="{% static 'images/search.png' %}">
+        <h3>Skill Gap Detection</h3>
+    </div>
+
+    <div class="feature-card">
+        <img src="{% static 'images/matching.png' %}">
+        <h3>Smart Job Matching</h3>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Optimize Your Resume. Get More Interviews.</h2>
+    <a href="{% url 'analyzer:register' %}" class="primary-btn">Start Now</a>
+</section>
+
+</div>
+
+<script>
+/* Moving Sparks */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<150;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+dx:(Math.random()-0.5)*0.6,
+dy:(Math.random()-0.5)*0.6
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+
+if(p.x<0||p.x>canvas.width) p.dx*=-1;
+if(p.y<0||p.y>canvas.height) p.dy*=-1;
+
+ctx.fillStyle="#8b7cff";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+/* Parallax */
+const preview=document.getElementById("preview");
+document.querySelector(".hero-right").addEventListener("mousemove",(e)=>{
+const rect=e.currentTarget.getBoundingClientRect();
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+const rotateX=((y-rect.height/2)/20);
+const rotateY=((x-rect.width/2)/20);
+preview.style.transform=`rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+});
+document.querySelector(".hero-right").addEventListener("mouseleave",()=>{
+preview.style.transform="rotateX(0deg) rotateY(0deg)";
+});
+
+/* Scroll reveal */
+function reveal(){
+document.querySelectorAll(".feature-card").forEach(el=>{
+if(el.getBoundingClientRect().top<window.innerHeight-100){
+el.classList.add("active");
+}
+});
+}
+window.addEventListener("scroll",reveal);
+reveal();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Select Template - ResumeAnalyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+color:white;
+background:
+linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+}
+
+/* PARTICLES */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-2;
+pointer-events:none;
+}
+
+/* MOVING GLOW */
+
+body::after{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle at 30% 30%, rgba(139,124,255,.25), transparent 50%);
+animation:moveGlow 12s infinite alternate ease-in-out;
+z-index:-1;
+}
+
+@keyframes moveGlow{
+from{transform:translate(-10%,-10%)}
+to{transform:translate(10%,10%)}
+}
+
+/* BRAND */
+
+.brand-top{
+position:absolute;
+top:30px;
+left:40px;
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.brand-top img{
+width:45px;
+}
+
+.brand-top h1{
+font-size:26px;
+font-weight:800;
+}
+
+/* PAGE TITLE */
+
+.page-title{
+text-align:center;
+margin-top:120px;
+font-size:36px;
+font-weight:800;
+}
+
+/* TEMPLATE SECTION */
+
+.template-section{
+max-width:1100px;
+margin:60px auto;
+display:flex;
+flex-direction:column;
+gap:80px;
+}
+
+/* TEMPLATE ROW */
+
+.template-row{
+display:flex;
+align-items:center;
+gap:60px;
+}
+
+/* ALTERNATE LAYOUT */
+
+.template-row:nth-child(even){
+flex-direction:row-reverse;
+}
+
+/* IMAGE */
+
+.template-img{
+width:320px;
+border-radius:12px;
+box-shadow:0 25px 50px rgba(0,0,0,.6);
+cursor:pointer;
+transition:.3s;
+}
+
+.template-img:hover{
+transform:scale(1.05);
+}
+
+/* TEXT */
+
+.template-info{
+max-width:400px;
+}
+
+.template-info h2{
+font-size:24px;
+margin-bottom:10px;
+}
+
+.template-info p{
+opacity:.8;
+margin-bottom:20px;
+}
+
+/* BUTTON */
+
+.use-btn{
+padding:12px 25px;
+border:none;
+border-radius:8px;
+background:linear-gradient(135deg,#6a5af9,#8b7cff);
+color:white;
+font-weight:600;
+text-decoration:none;
+}
+
+.use-btn:hover{
+box-shadow:0 20px 40px rgba(139,124,255,.5);
+}
+
+/* POPUP */
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.8);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.popup img{
+width:450px;
+border-radius:10px;
+}
+.template-btn{
+
+display:inline-block;
+
+margin-top:20px;
+
+padding:12px 28px;
+
+border-radius:30px;
+
+text-decoration:none;
+
+font-weight:600;
+
+color:white;
+
+background:linear-gradient(135deg,#6a5af9,#8b7cff);
+
+box-shadow:0 10px 25px rgba(139,124,255,.5);
+
+transition:all .3s ease;
+
+}
+
+/* hover glow */
+
+.template-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 20px 40px rgba(139,124,255,.7);
+
+}
+
+/* click bubble effect */
+
+.template-btn:active{
+
+transform:scale(.95);
+
+box-shadow:0 5px 15px rgba(139,124,255,.6);
+
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- LOGO -->
+
+<div class="brand-top">
+<img src="{% static 'images/brain-logo.png' %}">
+<h1>ResumeAnalyzer</h1>
+</div>
+
+<h1 class="page-title">Select Your Resume Template</h1>
+
+<div class="template-section">
+
+<!-- TEMPLATE 1 -->
+
+<div class="template-row">
+
+<img src="{% static 'images/templates/template1.png' %}" class="template-img" onclick="openPreview(this.src)">
+
+<div class="template-info">
+<h2>Professional Classic</h2>
+<p>A clean professional resume perfect for software engineers and corporate roles.</p>
+
+<a href="{% url 'analyzer:build_resume' 1 %}" class="template-btn">
+Use Template
+</a></div>
+
+</div>
+
+<!-- TEMPLATE 2 -->
+
+<div class="template-row">
+
+<img src="{% static 'images/templates/template2.png' %}" class="template-img" onclick="openPreview(this.src)">
+
+<div class="template-info">
+<h2>Modern Photo Resume</h2>
+<p>Best for designers and creative professionals with profile photo.</p>
+
+<a href="{% url 'analyzer:build_resume' 2 %}" class="template-btn">
+Use Template
+</a></div>
+
+</div>
+
+<!-- TEMPLATE 3 -->
+
+<div class="template-row">
+
+<img src="{% static 'images/templates/template3.png' %}" class="template-img" onclick="openPreview(this.src)">
+
+<div class="template-info">
+<h2>Corporate Executive</h2>
+<p>Elegant layout ideal for experienced professionals and managers.</p>
+
+<a href="{% url 'analyzer:build_resume' 3 %}" class="template-btn">
+Use Template
+</a>
+</div>
+
+</div>
+
+<!-- TEMPLATE 4 -->
+
+<div class="template-row">
+
+<img src="{% static 'images/templates/template4.png' %}" class="template-img" onclick="openPreview(this.src)">
+
+<div class="template-info">
+<h2>Minimalist Resume</h2>
+<p>Simple and ATS-friendly template for freshers and entry-level roles.</p>
+
+<a href="{% url 'analyzer:build_resume' 4 %}" class="template-btn">
+Use Template
+</a>
+</div>
+
+</div>
+
+<!-- TEMPLATE 5 -->
+
+<div class="template-row">
+
+<img src="{% static 'images/templates/template5.png' %}" class="template-img" onclick="openPreview(this.src)">
+
+<div class="template-info">
+<h2>Creative Portfolio</h2>
+<p>Perfect for creative fields like UI/UX designers and developers.</p>
+
+<a href="{% url 'analyzer:build_resume' 5 %}" class="template-btn">
+Use Template
+</a>
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP PREVIEW -->
+
+<div class="popup" id="popup" onclick="closePreview()">
+<img id="popup-img">
+</div>
+
+<script>
+
+/* POPUP */
+
+function openPreview(src){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popup-img").src=src;
+}
+
+function closePreview(){
+document.getElementById("popup").style.display="none";
+}
+
+/* PARTICLES */
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+
+ctx.fillStyle="#8b7cff";
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+});
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+</script>
+
+</body>
+</html>

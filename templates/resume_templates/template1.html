@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Resume</title>
+
+<style>
+
+body{
+background:
+linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+font-family:"Times New Roman", serif;
+}
+
+.resume-page{
+width:794px;
+min-height:1123px;
+margin:80px auto;
+background:white;
+padding:50px;
+}
+
+.header{
+text-align:center;
+}
+
+.header h1{
+letter-spacing:3px;
+margin-bottom:5px;
+}
+
+.section{
+margin-top:25px;
+}
+
+.section-title{
+font-weight:bold;
+border-bottom:1px solid black;
+margin-bottom:10px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+}
+
+.download{
+position:fixed;
+bottom:40px;
+right:40px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+background:#6a5af9;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="resume-page">
+
+<div class="header">
+<h1>{{ first_name }} {{ last_name }}</h1>
+
+<p>
+{{ phone }} • {{ location }} <br>
+{{ email }} • {{ linkedin }} • {{ github }}
+</p>
+</div>
+
+<div class="section">
+<div class="section-title">Professional Summary</div>
+<p>{{ summary }}</p>
+</div>
+
+<div class="section">
+<div class="section-title">Skills</div>
+<p>{{ skills }}</p>
+</div>
+
+<div class="section">
+<div class="section-title">Experience</div>
+
+<b>{{ job_title }}</b> – {{ company }}
+
+<div class="row">
+<span>{{ job_location }}</span>
+<span>{{ job_duration }}</span>
+</div>
+
+<ul>
+<li>{{ exp1 }}</li>
+<li>{{ exp2 }}</li>
+<li>{{ exp3 }}</li>
+</ul>
+
+</div>
+
+<div class="section">
+<div class="section-title">Projects</div>
+
+<b>{{ project_title }}</b>
+
+<p>
+{{ project_description }} <br>
+<b>Technology:</b> {{ project_platform }}
+</p>
+
+</div>
+
+<div class="section">
+<div class="section-title">Education</div>
+
+<div class="row">
+<span>{{ degree1 }} – {{ college1 }}</span>
+<span>{{ year1 }}</span>
+</div>
+
+<div class="row">
+<span>{{ degree2 }} – {{ college2 }}</span>
+<span>{{ year2 }}</span>
+</div>
+
+<div class="row">
+<span>{{ degree3 }} – {{ college3 }}</span>
+<span>{{ year3 }}</span>
+</div>
+
+</div>
+
+<div class="section">
+<div class="section-title">Certifications</div>
+
+<p>{{ certifications }}</p>
+
+</div>
+
+</div>
+
+<div class="download">
+<button onclick="window.print()">Download PDF</button>
+</div>
+
+</body>
+</html>

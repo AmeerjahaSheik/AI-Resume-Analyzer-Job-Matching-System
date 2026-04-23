@@ -1,0 +1,267 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Resume Builder - ResumeAnalyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:auto;
+color:white;
+background:
+linear-gradient(rgba(10,5,30,0.85), rgba(10,5,30,0.9)),
+url("{% static 'images/bg-main.jpg' %}") no-repeat center center/cover;
+}
+
+/* PARTICLES */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-2;
+pointer-events:none;
+}
+
+/* MOVING GLOW */
+
+body::after{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle at 30% 30%, rgba(139,124,255,.25), transparent 50%);
+animation:moveGlow 12s infinite alternate ease-in-out;
+z-index:-1;
+}
+
+@keyframes moveGlow{
+from{transform:translate(-10%,-10%)}
+to{transform:translate(10%,10%)}
+}
+
+/* LOGO */
+
+.brand-top{
+position:absolute;
+top:30px;
+left:40px;
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.brand-top img{
+width:45px;
+}
+
+.brand-top h1{
+font-size:26px;
+font-weight:800;
+}
+
+/* FORM CONTAINER */
+
+.container{
+width:800px;
+margin:120px auto;
+padding:40px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(25px);
+border-radius:20px;
+box-shadow:0 0 60px rgba(139,124,255,.4);
+}
+
+.section-title{
+margin-top:25px;
+font-weight:700;
+}
+
+input, textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+background:rgba(255,255,255,.1);
+color:white;
+}
+
+textarea{
+height:80px;
+}
+
+button{
+margin-top:25px;
+padding:14px;
+width:100%;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#6a5af9,#8b7cff);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+button:hover{
+box-shadow:0 20px 40px rgba(139,124,255,.5);
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="brand-top">
+<img src="{% static 'images/brain-logo.png' %}">
+<h1>ResumeAnalyzer</h1>
+</div>
+
+<div class="container">
+
+<h2>Enter Resume Details</h2>
+
+<form method="POST" action="{% url 'analyzer:generate_resume' template_id %}" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="section-title">Personal Information</div>
+
+<input name="first_name" placeholder="First Name">
+<input name="last_name" placeholder="Last Name">
+<input name="email" placeholder="Email Address">
+<input name="phone" placeholder="Mobile Number">
+<input name="location" placeholder="Location">
+
+<input type="file" name="photo">
+
+<div class="section-title">Professional Summary</div>
+
+<textarea name="summary"></textarea>
+
+
+<div class="section-title">Education</div>
+
+<input name="degree1" placeholder="Degree">
+<input name="college1" placeholder="College">
+<input name="year1" placeholder="Year">
+
+<input name="degree2" placeholder="Degree">
+<input name="college2" placeholder="College">
+<input name="year2" placeholder="Year">
+
+<input name="degree3" placeholder="Degree">
+<input name="college3" placeholder="College">
+<input name="year3" placeholder="Year">
+
+
+<div class="section-title">Core Skills</div>
+
+<textarea name="skills"></textarea>
+
+
+<div class="section-title">Projects</div>
+
+<input name="project_title" placeholder="Project Title">
+
+<textarea name="project_description" placeholder="Project Description"></textarea>
+
+<input name="project_platform" placeholder="Platform / Technology">
+
+
+<div class="section-title">Experience</div>
+
+<input name="job_title" placeholder="Role">
+
+<input name="company" placeholder="Company">
+
+<input name="job_duration" placeholder="Duration">
+
+<input name="job_location" placeholder="Location">
+
+<textarea name="exp1" placeholder="Responsibility 1"></textarea>
+
+<textarea name="exp2" placeholder="Responsibility 2"></textarea>
+
+<textarea name="exp3" placeholder="Responsibility 3"></textarea>
+
+
+<div class="section-title">Certifications</div>
+
+<textarea name="certifications"></textarea>
+
+
+<div class="section-title">URLs</div>
+
+<input name="linkedin" placeholder="LinkedIn URL">
+
+<input name="github" placeholder="GitHub URL">
+
+
+<button type="submit">Generate Resume</button>
+
+</form>
+
+</div>
+
+<script>
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+for(let i=0;i<120;i++){
+
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+
+ctx.fillStyle="#8b7cff";
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+});
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
